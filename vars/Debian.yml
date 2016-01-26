@@ -1,0 +1,5 @@
+---
+# vars file for tmp
+anyenv_pyenv_dependencies:
+  - curses
+  - m4

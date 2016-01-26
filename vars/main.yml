@@ -1,0 +1,12 @@
+---
+anyenv_installable_env_list:
+  - rbenv
+  - plenv
+  - pyenv
+  - phpenv
+  - ndenv
+  - denv
+  - jenv
+  - luaenv
+  - goenv
+
