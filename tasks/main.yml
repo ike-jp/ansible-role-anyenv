@@ -5,7 +5,7 @@
 
 - name: Install anyenv
   git:
-    repos: "{{ anyenv_repository_url }}"
+    repo: "{{ anyenv_repository_url }}"
     dist: "{{ anyenv_install_dir }}"
 
 - name: Path
