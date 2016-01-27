@@ -2,8 +2,9 @@
 - hosts: localhost
   remote_user: root
 
-  vars:
+  #vars:
 
   roles:
     - yaegashi.blockinfile
     - ansible-role-anyenv
+

@@ -5,18 +5,18 @@
 
 - name: Install anyenv
   git:
-    repos: https://github.com/riywo/anyenv
-    dist: ~/.anyenv
+    repos: "{{ anyenv_repository_url }}"
+    dist: "{{ anyenv_install_dir }}"
 
 - name: Path
   blockinfile:
-    dest: {{ anyenv_export_to_profile }}
-    block: {{ anyenv_export_text }}
-  when: {{ anyenv_export }}
+    dest: "{{ anyenv_export_to_profile }}"
+    block: "{{ anyenv_export_text }}"
+  when: anyenv_export
 
 - name: Install envs
   command: "anyenv install {{ item }}"
-  when: "anyenv_install{{ item }}"
+  when: anyenv_install_{{ item }}
   with_items: anyenv_installable_env_list
 
 
