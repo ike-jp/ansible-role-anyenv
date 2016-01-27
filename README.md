@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ike-jp/ansible-role-anyenv.svg?branch=master)](https://travis-ci.org/ike-jp/ansible-role-anyenv)
+
 Ansible Role: anyenv
 =========
 
