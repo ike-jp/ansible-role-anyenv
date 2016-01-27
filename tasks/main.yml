@@ -16,7 +16,7 @@
 
 - name: Install envs
   command: "anyenv install {{ item }}"
-  with_items: "{{ anyenv_installable_env_list" }}
+  with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
 
 
