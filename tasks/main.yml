@@ -6,9 +6,9 @@
 - name: Install anyenv
   git:
     repo: "{{ anyenv_repository_url }}"
-    dist: "{{ anyenv_install_dir }}"
+    dest: "{{ anyenv_install_dir }}"
 
-- name: Path
+- name: Write path to profile
   blockinfile:
     dest: "{{ anyenv_export_to_profile }}"
     block: "{{ anyenv_export_text }}"
@@ -16,7 +16,7 @@
 
 - name: Install envs
   command: "anyenv install {{ item }}"
+  with_items: "{{ anyenv_installable_env_list" }}
   when: anyenv_install_{{ item }}
-  with_items: anyenv_installable_env_list
 
 
