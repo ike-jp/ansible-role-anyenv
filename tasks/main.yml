@@ -12,6 +12,7 @@
   blockinfile:
     dest: "{{ anyenv_export_to_profile }}"
     block: "{{ anyenv_export_text }}"
+    insertafter: EOF
   when: anyenv_export
 
 - name: Install envs
