@@ -24,6 +24,10 @@ install:
   - ansible-galaxy install yaegashi.blockinfile
 
 script:
+  # Change loaded profile
+  - rm ~/.bash_profile
+  - source ~/.profile
+
   # [debug] Show home directory
   - ls -lah ~
 
