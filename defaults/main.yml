@@ -3,11 +3,12 @@ anyenv_repository_url : https://github.com/riywo/anyenv
 anyenv_install_dir: ~/.anyenv
 
 anyenv_export: true
-anyenv_export_to_profile: ~/.bashrc
+anyenv_profile_to_add_path: ~/.bashrc
 anyenv_export_text: |
   if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
+  fi
 
 anyenv_install_rbenv: true
 anyenv_rbenv_global: 2.2.1
@@ -25,7 +26,7 @@ anyenv_luaenv_global: 5.2.1
 anyenv_luaenv_install_list:
   - 5.2.1
 
-anyenv_install_plenv: false
+anyenv_install_plenv: true
 anyenv_plenv_global: 1.0.0
 anyenv_plenv_install_list:
  - 1.0.0

@@ -7,17 +7,20 @@
   git:
     repo: "{{ anyenv_repository_url }}"
     dest: "{{ anyenv_install_dir }}"
+  notify: reload profile
 
-- name: Write path to profile
+- name: Add path to profile
   blockinfile:
-    dest: "{{ anyenv_export_to_profile }}"
+    dest: "{{ anyenv_profile_to_add_path }}"
     block: "{{ anyenv_export_text }}"
     insertafter: EOF
   when: anyenv_export
 
+# -sオプションで既にインストールされているならスキップする
 - name: Install envs
-  command: "anyenv install {{ item }}"
+  command: "anyenv install -s {{ item }}"
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
+  notify: reload profile
 
 

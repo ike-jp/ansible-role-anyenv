@@ -1,2 +1,4 @@
 ---
-# handlers file for tmp
+- name: reload profile
+  command: "source {{ anyenv_profile_to_add_path }}"
+
