@@ -18,7 +18,7 @@ install:
   - pip install ansible
 
   # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; executable = /bin/bash -l } >> ansible.cfg"
 
   # Install dependencies.
   - ansible-galaxy install yaegashi.blockinfile
@@ -36,6 +36,7 @@ script:
 
   # [debug] Show profile
   - cat ~/.profile
+  - cat ~/.bashrc
 
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv"
