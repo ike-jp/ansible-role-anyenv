@@ -3,7 +3,7 @@ anyenv_repository_url : https://github.com/riywo/anyenv
 anyenv_install_dir: ~/.anyenv
 
 anyenv_export: true
-anyenv_export_to_profile: ~/.profile
+anyenv_export_to_profile: ~/.bashrc
 anyenv_export_text: |
   if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
@@ -30,7 +30,17 @@ anyenv_plenv_global: 1.0.0
 anyenv_plenv_install_list:
  - 1.0.0
 
+anyenv_install_phpenv: false
+anyenv_phpenv_global: 1.0.0
+anyenv_phpenv_install_list:
+ - 5.5.4
+
 anyenv_install_goenv: false
 anyenv_goenv_global: 1.0.0
 anyenv_goenv_install_list:
  - 1.0.0
+
+anyenv_install_ndenv: false
+anyenv_install_denv: false
+anyenv_install_jenv: false
+
