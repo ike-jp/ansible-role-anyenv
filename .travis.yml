@@ -24,11 +24,17 @@ install:
   - ansible-galaxy install yaegashi.blockinfile
 
 script:
-  # Show home directory
-  - ls -lah
+  # [debug] Show home directory
+  - ls -lah ~
 
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+
+  # [debug] Show home directory
+  - ls -lah ~
+
+  # [debug] Show profile
+  - less ~/.profile
 
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo -vvvv"
