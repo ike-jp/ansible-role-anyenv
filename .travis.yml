@@ -42,6 +42,12 @@ script:
   # [debug] Show profile
   - cat ~/.profile
 
+  # [debug] Show login shell
+  echo $SHELL
+
+  # [debug] Show anyenv version
+  anyenv version
+
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
     ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
