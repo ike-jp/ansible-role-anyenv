@@ -31,13 +31,16 @@ script:
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 
   # [debug] Show profile
-  - less ~/.profile
+  - cat ~/.profile
 
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo -vvvv"
 
   # [debug] Show home directory
   - ls -lah ~
+
+  # [debug] Show profile
+  - cat ~/.profile
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
