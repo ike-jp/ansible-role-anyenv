@@ -43,10 +43,10 @@ script:
   - cat ~/.profile
 
   # [debug] Show login shell
-  echo $SHELL
+  - echo $SHELL
 
   # [debug] Show anyenv version
-  anyenv version
+  - anyenv version
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
