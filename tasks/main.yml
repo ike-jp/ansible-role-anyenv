@@ -17,8 +17,11 @@
 
 # -sオプションで既にインストールされているならスキップする
 - name: Install envs
-  command: |
-      anyenv install -s {{ item }}
+  shell: |
+    # ここでは一時的にexportする
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+    anyenv install -s {{ item }}
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
 
