@@ -1,47 +1,35 @@
 ---
-anyenv_repository_url : https://github.com/riywo/anyenv
-anyenv_install_dir: ~/.anyenv
+anyenv:
+  repository_url : https://github.com/riywo/anyenv
+  install_dir: ~/.anyenv
 
-anyenv_export: true
-anyenv_profile_to_add_path: ~/.bashrc
-anyenv_export_text: |
-  if [ -d $HOME/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  fi
+  export: true
+  profile_to_add_path: ~/.bashrc
+  export_text: |
+    if [ -d $HOME/.anyenv ] ; then
+        export PATH="$HOME/.anyenv/bin:$PATH"
+        eval "$(anyenv init -)"
+    fi
 
-anyenv_install_rbenv: true
-anyenv_rbenv_global: 2.2.1
-anyenv_rbenv_installation_versions:
-  - 2.2.1
+  envs:
+    - name: rbenv
+      global: 2.3.0
+      installation_versions:
+        - 2.3.0
+        - 2.2.4
+        - 2.2.3
+      dependencies:
 
-anyenv_install_pyenv: true
-anyenv_pyenv_global: 2.7.10
-anyenv_pyenv_installation_versions:
-  - 2.7.10
-  - 3.5.1
+    - name: pyenv
+      global: 2.7.10
+      installation_versions:
+        - 2.7.10
+        - 3.5.1
+      dependencies:
 
-anyenv_install_luaenv: true
-anyenv_luaenv_global: 5.2.1
-anyenv_luaenv_installation_versions:
-  - 5.2.1
-
-anyenv_install_plenv: true
-anyenv_plenv_global: 1.0.0
-anyenv_plenv_installation_versions:
- - 1.0.0
-
-anyenv_install_phpenv: false
-anyenv_phpenv_global: 1.0.0
-anyenv_phpenv_installation_versions:
- - 5.5.4
-
-anyenv_install_goenv: false
-anyenv_goenv_global: 1.0.0
-anyenv_goenv_installation_versions:
- - 1.0.0
-
-anyenv_install_ndenv: false
-anyenv_install_denv: false
-anyenv_install_jenv: false
+    - name: luaenv
+      global: 5.2.1
+      installation_versions:
+        - 5.2.1
+      dependencies:
 

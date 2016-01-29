@@ -1,0 +1,9 @@
+---
+- name: Install dependency libraries
+  apt:
+    pkg: "{{ item.1 }}"
+    state: present
+  with_subelements:
+    - "{{ anyenv.envs }}"
+    - "dependencies"
+

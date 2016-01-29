@@ -5,39 +5,69 @@ Ansible Role: anyenv
 
 Under development
 
+
 Requirements
 ------------
 
-+ RedHat/CentOS: None
-+ Debian/Ubuntu: None
++ RedHat/CentOS: bash
++ Debian/Ubuntu: bash
+
 
 Role Variables
 --------------
 
-+ hoge
+Available variables are listed below, along with default values (see defaults/main.yml):
+
+```
+anyenv:
+  repository_url : https://github.com/riywo/anyenv
+  install_dir: ~/.anyenv
+
+  export: true
+  profile_to_add_path: ~/.bashrc
+  export_text: |
+    if [ -d $HOME/.anyenv ] ; then
+        export PATH="$HOME/.anyenv/bin:$PATH"
+        eval "$(anyenv init -)"
+    fi
+
+  envs:
+    - name: rbenv
+      global: 2.3.0
+      installation_versions:
+        - 2.3.0
+        - 2.2.4
+...
+```
 
 Dependencies
 ------------
 
 + yaegashi.blockinfile
-+ Bash
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
          - { role: ike-jp.anyenv }
+
 
 License
 -------
 
 MIT License
 
+
+Acknowledgments
+---------------
+
+I want to thank [Jeff Geerling](http://www.jeffgeerling.com/) and [YAEGASHI Takeshi](https://github.com/yaegashi)
+
+
 Author Information
 ------------------
 
-('e')
+This role was created in 2.16 by ike-jp.
 

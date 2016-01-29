@@ -3,40 +3,38 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Install dependency libraries
+  include: "setup-{{ ansible_os_family }}.yml"
+
 - name: Install anyenv
   git:
-    repo: "{{ anyenv_repository_url }}"
-    dest: "{{ anyenv_install_dir }}"
+    repo: "{{ anyenv.repository_url }}"
+    dest: "{{ anyenv.install_dir }}"
 
 - name: Add path to profile
   blockinfile:
-    dest: "{{ anyenv_profile_to_add_path }}"
-    block: "{{ anyenv_export_text }}"
+    dest: "{{ anyenv.profile_to_add_path }}"
+    block: "{{ anyenv.export_text }}"
     insertafter: EOF
-  when: anyenv_export
+  when: anyenv.export
 
-# When added -s option, anyenv will skip the installation.
+# When added -s option, **env will skip the installation.
 - name: Install envs
   shell: |
-    /bin/bash -lc "source {{ anyenv_profile_to_add_path }}"
-    /bin/bash -lc "anyenv install -s {{ item }}"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "anyenv install -s {{ item.name }}"
   register: result
   changed_when: result.stdout != "" and result.stderr != ""
-  with_items: "{{ anyenv_installable_env_list }}"
-  when: anyenv_install_{{ item }}
-
-- name: Make install a
-  shell: |
-    echo ""
-  with_items: "{{ anyenv_installable_env_list }}"
-  register: result
+  with_items: "{{ anyenv.envs }}"
 
 - name: Install language
   shell: |
-    /bin/bash -lc "source {{ anyenv_profile_to_add_path }}"
-    /bin/bash -lc "{{ item[0] }} {{ item[1] }}"
-  with_nested:
-    - "{{ anyenv_installable_env_list }}"
-    - "anyenv_{{ item[0] }}_installation_versions"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "{{ item.0.name }} install -s {{ item.1 }}"
+  register: result
+  changed_when: result.stdout != "" and result.stderr != ""
+  with_subelements:
+    - "{{ anyenv.envs }}"
+    - "installation_versions"
 
 
