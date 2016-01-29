@@ -69,5 +69,5 @@ I want to thank [Jeff Geerling](http://www.jeffgeerling.com/) and [YAEGASHI Take
 Author Information
 ------------------
 
-This role was created in 2.16 by ike-jp.
+This role was created in 2016 by ike-jp.
 

@@ -3,13 +3,20 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Install dependency libraries
-  include: "setup-{{ ansible_os_family }}.yml"
+
+- include: setup-RedHat.yml
+  when: ansible_os_family == "RedHat"
+
+
+- include: setup-Debian.yml
+  when: ansible_os_family == "Debian"
+
 
 - name: Install anyenv
   git:
     repo: "{{ anyenv.repository_url }}"
     dest: "{{ anyenv.install_dir }}"
+
 
 - name: Add path to profile
   blockinfile:
@@ -17,6 +24,7 @@
     block: "{{ anyenv.export_text }}"
     insertafter: EOF
   when: anyenv.export
+
 
 # When added -s option, **env will skip the installation.
 - name: Install envs
@@ -26,6 +34,7 @@
   register: result
   changed_when: result.stdout != "" and result.stderr != ""
   with_items: "{{ anyenv.envs }}"
+
 
 - name: Install language
   shell: |
