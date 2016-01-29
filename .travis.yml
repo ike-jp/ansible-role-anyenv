@@ -28,6 +28,9 @@ script:
   #- rm ~/.bash_profile
   #- source ~/.profile
 
+  # [debug] Show ansible
+  - ansible --version
+
   # [debug] Show current directory
   - pwd
   - ls -lah
