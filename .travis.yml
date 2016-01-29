@@ -30,6 +30,11 @@ script:
 
   # [debug] Show current directory
   - pwd
+  - readlink -f ~
+  - readlink -f $HOME
+
+  # [debug] Show current directory
+  - cat /etc/shells
 
   # [debug] Show home directory
   - ls -lah ~

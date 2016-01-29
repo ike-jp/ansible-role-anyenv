@@ -17,7 +17,7 @@
 
 # -sオプションで既にインストールされているならスキップする
 - name: Install envs
-  command: |
+  shell: |
       "source {{ anyenv_profile_to_add_path }}"
       "anyenv install -s {{ item }}"
   with_items: "{{ anyenv_installable_env_list }}"
