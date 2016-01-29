@@ -18,8 +18,7 @@ install:
   - pip install ansible==1.9.4
 
   # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; echo 'executable = /bin/bash -l'; } >> ansible.cfg"
-  #- "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
   # Install dependencies.
   - ansible-galaxy install yaegashi.blockinfile
@@ -63,7 +62,7 @@ script:
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)

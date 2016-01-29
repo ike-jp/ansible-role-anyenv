@@ -32,9 +32,4 @@
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
 
-    #source "{{ anyenv_profile_to_add_path }}"
-    #anyenv install -s "{{ item }}"
-
-#   /bin/bash -lc export PATH="{{ anyenv_install_dir }}/bin:$PATH"
-#   /bin/bash -lc eval "$(anyenv init -)"
 
