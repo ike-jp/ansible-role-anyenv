@@ -30,35 +30,36 @@ script:
 
   # [debug] Show current directory
   - pwd
+  - ls -lah
+  - cat ansible.cfg
+
   - readlink -f ~
   - readlink -f $HOME
 
-  # [debug] Show current directory
+  # [debug] Show login shell
+  - echo $SHELL
   - cat /etc/shells
+  - ls -la /bin/bash
 
   # [debug] Show home directory
   - ls -lah ~
+  - cat ~/.profile
+  - cat ~/.bashrc
 
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 
-  # [debug] Show profile
-  - cat ~/.profile
-  - cat ~/.bashrc
-
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv"
 
-  # [debug] Show home directory
+  # [debug] Show after home directory
   - ls -lah ~
-
-  # [debug] Show profile
   - cat ~/.profile
-
-  # [debug] Show login shell
-  - echo $SHELL
+  - cat ~/.bashrc
 
   # [debug] Show anyenv version
+  - anyenv version
+  - source ~/.bashrc
   - anyenv version
 
   # Run the role/playbook again, checking to make sure it's idempotent.
