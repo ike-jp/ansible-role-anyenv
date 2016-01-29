@@ -7,7 +7,6 @@
   git:
     repo: "{{ anyenv_repository_url }}"
     dest: "{{ anyenv_install_dir }}"
-  notify: reload profile
 
 - name: Add path to profile
   blockinfile:
@@ -18,9 +17,10 @@
 
 # -sオプションで既にインストールされているならスキップする
 - name: Install envs
-  command: "anyenv install -s {{ item }}"
+  command: |
+      "source {{ anyenv_profile_to_add_path }}"
+      "anyenv install -s {{ item }}"
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
-  notify: reload profile
 
 
