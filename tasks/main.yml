@@ -25,16 +25,16 @@
 # -sオプションで既にインストールされているならスキップする
 - name: Install envs
   shell: |
-    source "{{ anyenv_profile_to_add_path }}"
-    anyenv install -s "{{ item }}"
+    /bin/bash -lc "source {{ anyenv_profile_to_add_path }}"
+    /bin/bash -lc "anyenv install -s {{ item }}"
   register: result
   changed_when: result.stdout != "" and result.stderr != ""
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
 
-#  shell: /bin/bash "-lc source {{ anyenv_profile_to_add_path }} && anyenv install -s {{ item }}"
-#
-#   source "{{ anyenv_profile_to_add_path }}"
+    #source "{{ anyenv_profile_to_add_path }}"
+    #anyenv install -s "{{ item }}"
+
 #   /bin/bash -lc export PATH="{{ anyenv_install_dir }}/bin:$PATH"
 #   /bin/bash -lc eval "$(anyenv init -)"
 
