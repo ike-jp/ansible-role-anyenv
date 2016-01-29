@@ -15,14 +15,7 @@
     insertafter: EOF
   when: anyenv_export
 
-#- name: Check installed envs
-#  shell: |
-#    source "{{ anyenv_profile_to_add_path }}" > /dev/null 2>&1
-#    anyenv version
-#  changed_when: false
-#  register: result_check_envs
-
-# -sオプションで既にインストールされているならスキップする
+# When added -s option, anyenv will skip the installation.
 - name: Install envs
   shell: |
     /bin/bash -lc "source {{ anyenv_profile_to_add_path }}"
@@ -31,5 +24,19 @@
   changed_when: result.stdout != "" and result.stderr != ""
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
+
+- name: Make install a
+  shell: |
+    echo ""
+  with_items: "{{ anyenv_installable_env_list }}"
+  register: result
+
+- name: Install language
+  shell: |
+    /bin/bash -lc "source {{ anyenv_profile_to_add_path }}"
+    /bin/bash -lc "{{ item[0] }} {{ item[1] }}"
+  with_nested:
+    - "{{ anyenv_installable_env_list }}"
+    - "anyenv_{{ item[0] }}_installation_versions"
 
 

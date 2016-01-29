@@ -12,33 +12,33 @@ anyenv_export_text: |
 
 anyenv_install_rbenv: true
 anyenv_rbenv_global: 2.2.1
-anyenv_rbenv_install_list:
+anyenv_rbenv_installation_versions:
   - 2.2.1
 
 anyenv_install_pyenv: true
 anyenv_pyenv_global: 2.7.10
-anyenv_pyenv_install_list:
+anyenv_pyenv_installation_versions:
   - 2.7.10
   - 3.5.1
 
 anyenv_install_luaenv: true
 anyenv_luaenv_global: 5.2.1
-anyenv_luaenv_install_list:
+anyenv_luaenv_installation_versions:
   - 5.2.1
 
 anyenv_install_plenv: true
 anyenv_plenv_global: 1.0.0
-anyenv_plenv_install_list:
+anyenv_plenv_installation_versions:
  - 1.0.0
 
 anyenv_install_phpenv: false
 anyenv_phpenv_global: 1.0.0
-anyenv_phpenv_install_list:
+anyenv_phpenv_installation_versions:
  - 5.5.4
 
 anyenv_install_goenv: false
 anyenv_goenv_global: 1.0.0
-anyenv_goenv_install_list:
+anyenv_goenv_installation_versions:
  - 1.0.0
 
 anyenv_install_ndenv: false
