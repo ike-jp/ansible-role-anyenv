@@ -28,7 +28,7 @@
     source "{{ anyenv_profile_to_add_path }}" > /dev/null 2>&1
     anyenv install -s {{ item }}
   register: result
-  changed_when: result.stdout != ""
+  changed_when: result.stdout != "" and result.stderr != ""
   with_items: "{{ anyenv_installable_env_list }}"
   when: anyenv_install_{{ item }}
 
