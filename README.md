@@ -19,7 +19,8 @@ Role Variables
 Dependencies
 ------------
 
-None
++ yaegashi.blockinfile
++ Bash
 
 Example Playbook
 ----------------

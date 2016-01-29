@@ -24,30 +24,26 @@ install:
   - ansible-galaxy install yaegashi.blockinfile
 
 script:
-  # Change loaded profile
-  #- rm ~/.bash_profile
-  #- source ~/.profile
-
   # [debug] Show ansible
-  - ansible --version
+  #- ansible --version
 
   # [debug] Show current directory
-  - pwd
-  - ls -lah
-  - cat ansible.cfg
+  #- pwd
+  #- ls -lah
+  #- cat ansible.cfg
 
-  - readlink -f ~
-  - readlink -f $HOME
+  #- readlink -f ~
+  #- readlink -f $HOME
 
   # [debug] Show login shell
-  - echo $SHELL
-  - cat /etc/shells
-  - ls -la /bin/bash
+  #- echo $SHELL
+  #- cat /etc/shells
+  #- ls -la /bin/bash
 
   # [debug] Show home directory
-  - ls -lah ~
-  - cat ~/.profile
-  - cat ~/.bashrc
+  #- ls -lah ~
+  #- cat ~/.profile
+  #- cat ~/.bashrc
 
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
@@ -61,7 +57,6 @@ script:
   - cat ~/.bashrc
 
   # [debug] Show anyenv version
-  - anyenv version
   - source ~/.bashrc
   - anyenv version
 
