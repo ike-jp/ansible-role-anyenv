@@ -25,8 +25,8 @@ install:
 
 script:
   # Change loaded profile
-  - rm ~/.bash_profile
-  - source ~/.profile
+  #- rm ~/.bash_profile
+  #- source ~/.profile
 
   # [debug] Show home directory
   - ls -lah ~

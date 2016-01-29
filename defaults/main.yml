@@ -3,7 +3,7 @@ anyenv_repository_url : https://github.com/riywo/anyenv
 anyenv_install_dir: ~/.anyenv
 
 anyenv_export: true
-anyenv_profile_to_add_path: ~/.profile
+anyenv_profile_to_add_path: ~/.bashrc
 anyenv_export_text: |
   if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
