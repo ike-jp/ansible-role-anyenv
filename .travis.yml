@@ -13,6 +13,9 @@ before_install:
   - sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ trusty main universe"
   - sudo apt-get update -qq
 
+  # Uninstall rvm
+  - rvm implode
+
 install:
   # Install Ansible.
   - pip install ansible==1.9.4
