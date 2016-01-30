@@ -13,9 +13,6 @@ before_install:
   - sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ trusty main universe"
   - sudo apt-get update -qq
 
-  # Uninstall rvm
-  - sudo rvm implode --force
-
 install:
   # Install Ansible.
   - pip install ansible==1.9.4
@@ -27,6 +24,9 @@ install:
   - ansible-galaxy install yaegashi.blockinfile
 
 script:
+   # Uninstall rvm
+  - rvm implode --force || sudo rvm implode --force
+
   # [debug] Show ansible
   #- ansible --version
 
