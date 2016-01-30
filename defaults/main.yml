@@ -1,6 +1,6 @@
 ---
 anyenv:
-  repository_url : https://github.com/riywo/anyenv
+  repository_url: https://github.com/riywo/anyenv
   installaton_dir: ~/.anyenv
 
   export: true
