@@ -14,7 +14,7 @@ before_install:
   - sudo apt-get update -qq
 
   # Uninstall rvm
-  - rvm implode
+  - sudo rvm implode --force
 
 install:
   # Install Ansible.
