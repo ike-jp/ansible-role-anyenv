@@ -2,7 +2,7 @@
 anyenv:
   repository_url : https://github.com/riywo/anyenv
   installaton_dir: ~/.anyenv
-  executable: /bin/bash
+  executable: /bin/bash -l
 
   export: true
   profile_to_add_path: ~/.bashrc
