@@ -1,49 +1,59 @@
 ---
-anyenv:
-  repository_url: https://github.com/riywo/anyenv
-  installaton_dir: ~/.anyenv
+anyenv_repository_url: https://github.com/riywo/anyenv
+anyenv_installaton_dir: ~/.anyenv
 
-  export: true
-  profile_to_add_path: ~/.bashrc
-  export_text: |
-    if [ -d $HOME/.anyenv ] ; then
-        export PATH="$HOME/.anyenv/bin:$PATH"
-        eval "$(anyenv init -)"
-    fi
+anyenv_is_export: true
+anyenv_export_profile_to_add_path: ~/.bashrc
+anyenv_export_text: |
+  if [ -d $HOME/.anyenv ] ; then
+      export PATH="$HOME/.anyenv/bin:$PATH"
+      eval "$(anyenv init -)"
+  fi
 
-  plugins:
-    # Because the version of Ruby-build is old,
-    # may fail to install the new Ruby.
-    - name: anyenv-update
-      repository_url: https://github.com/znz/anyenv-update.git
-      installation_dir: ~/.anyenv/plugins/anyenv-update
+anyenv_plugins_installation_dir: "{{ anyenv_installaton_dir }}/plugins"
+anyenv_plugins:
+  # Because the version of Ruby-build is old,
+  # may fail to install the new Ruby.
+  - name: anyenv-update
+    repository_url: https://github.com/znz/anyenv-update.git
 
-  envs:
-    - name: rbenv
-      global_version: 2.3.0
-      dependencies: []
-      installation_versions:
-        - 2.3.0
-        - 2.2.4
-        - 2.2.3
+  - name: anyenv-git
+    repository_url: https://github.com/znz/anyenv-git.git
 
-    - name: pyenv
-      global_version: 2.7.10
-      dependencies: []
-      installation_versions:
-        - 2.7.10
-        - 3.5.1
+anyenv_envs:
+  - name: rbenv
+    global_version: 2.3.0
+    installation_versions:
+      - 2.3.0
 
-    - name: luaenv
-      global_version: 5.2.2
-      dependencies: []
-      installation_versions:
-        - 5.2.1
-        - 5.2.2
+  - name: pyenv
+    global_version: 2.7.10
+    installation_versions:
+      - 2.7.10
+      - 3.5.1
 
-    - name: plenv
-      global_version: system
-      dependencies: []
-      installation_versions: []
+  - name: luaenv
+    global_version: 5.2.2
+    installation_versions:
+      - 5.2.2
+
+  - name: plenv
+    global_version: system
+    installation_versions: []
+
+# If fail to install, write necessary libraries to the playbook.
+# Here written libraries will be installed by apt or yum.
+anyenv_dependencies:
+  - name: rbenv
+    libraries: []
+
+  - name: pyenv
+    libraries: []
+
+  - name: luaenv
+    libraries: []
+
+  - name: plenv
+    libraries: []
 
 

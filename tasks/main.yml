@@ -14,29 +14,29 @@
 
 - name: Install anyenv
   git:
-    repo: "{{ anyenv.repository_url }}"
-    dest: "{{ anyenv.installaton_dir }}"
+    repo: "{{ anyenv_repository_url }}"
+    dest: "{{ anyenv_installaton_dir }}"
 
 
 - name: Install anyenv-plugins
   git:
     repo: "{{ item.repository_url }}"
-    dest: "{{ item.installation_dir }}"
+    dest: "{{ anyenv_plugins_installation_dir }}/{{ item.name }}"
   with_items:
-    - "{{ anyenv.plugins }}"
+    - "{{ anyenv_plugins }}"
 
 
 - name: Add path to profile
   blockinfile:
-    dest: "{{ anyenv.profile_to_add_path }}"
-    block: "{{ anyenv.export_text }}"
+    dest: "{{ anyenv_export_profile_to_add_path }}"
+    block: "{{ anyenv_export_text }}"
     insertafter: EOF
-  when: anyenv.export
+  when: anyenv_is_export
 
 
 - name: Update anyenv
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "anyenv update"
   register: result
   changed_when: false
@@ -45,20 +45,20 @@
 # When added -s option, anyenv will skip the installation.
 - name: Install envs
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "anyenv install -s {{ item.name }}"
   register: result
   changed_when:
     - result.stdout != ""
     - result.stderr != ""
-  with_items: "{{ anyenv.envs }}"
+  with_items: "{{ anyenv_envs }}"
 
 
 # Usually **env has -s option in installation command,
 # but luaenv not having it. So I used failed_when.
 - name: Install versions
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
   register: result
   changed_when: "'already exists' not in result.stderr"
@@ -67,13 +67,13 @@
     - "'already exists' not in result.stderr"
     - "'Installed' not in result.stderr"
   with_subelements:
-    - "{{ anyenv.envs }}"
+    - "{{ anyenv_envs }}"
     - "installation_versions"
 
 
 - name: Set global version
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "{{ item.name }} version"
     /bin/bash -lc "{{ item.name }} global {{ item.global_version | default(system) }}"
     /bin/bash -lc "{{ item.name }} version"
@@ -81,6 +81,6 @@
   changed_when:
     - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
   with_items:
-    - "{{ anyenv.envs }}"
+    - "{{ anyenv_envs }}"
 
 

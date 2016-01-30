@@ -1,9 +1,10 @@
 ---
 - name: Install dependency libraries
+  sudo: yes
   yum:
     name: "{{ item.1 }}"
     state: present
   with_subelements:
-    - "{{ anyenv.envs }}"
-    - "dependencies"
+    - "{{ anyenv_dependencies }}"
+    - "libraries"
 
