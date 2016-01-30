@@ -79,3 +79,7 @@ This role was created in 2016 by ike-jp.
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ike-jp/ansible-role-anyenv/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ike-jp/ansible-role-anyenv/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
