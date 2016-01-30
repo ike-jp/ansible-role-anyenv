@@ -26,20 +26,20 @@
     - "{{ anyenv.plugins }}"
 
 
-- name: Update anyenv
-  shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
-    /bin/bash -lc "anyenv update"
-  register: result
-  changed_when: false
-
-
 - name: Add path to profile
   blockinfile:
     dest: "{{ anyenv.profile_to_add_path }}"
     block: "{{ anyenv.export_text }}"
     insertafter: EOF
   when: anyenv.export
+
+
+- name: Update anyenv
+  shell: |
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "anyenv update"
+  register: result
+  changed_when: false
 
 
 # When added -s option, anyenv will skip the installation.
