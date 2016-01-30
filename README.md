@@ -64,13 +64,6 @@ License
 MIT License
 
 
-Acknowledgments
----------------
-
-+ [Jeff Geerling](http://www.jeffgeerling.com/)
-+ [YAEGASHI Takeshi](https://github.com/yaegashi)
-
-
 Author Information
 ------------------
 

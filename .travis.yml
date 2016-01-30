@@ -24,8 +24,13 @@ install:
   - ansible-galaxy install yaegashi.blockinfile
 
 script:
-   # Uninstall rvm
-  - rvm implode --force || sudo rvm implode --force
+  # Uninstall rvm because failed to install Ruby
+  # by issuing the following error when run playbook test.
+  # --------------------
+  # ./tool/rbinstall.rb:728:in `chmod': Operation not permitted @ chmod_internal
+  # - /usr/local/rvm/gems/ruby-2.2.3/ (Errno::EPERM)
+  # --------------------
+  - sudo rvm implode --force
 
   # [debug] Show ansible
   #- ansible --version
@@ -69,4 +74,5 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+
 
