@@ -1,5 +1,5 @@
 ---
-# User Ubuntu14.04 Server LTS
+# Use Ubuntu14.04 Server LTS
 sudo: required
 dist: trusty
 
@@ -30,7 +30,7 @@ script:
   # ./tool/rbinstall.rb:728:in `chmod': Operation not permitted @ chmod_internal
   # - /usr/local/rvm/gems/ruby-2.2.3/ (Errno::EPERM)
   # --------------------
-  - sudo rvm implode --force
+  - rvm implode --force > /dev/null 2>&1
 
   # [debug] Show ansible
   #- ansible --version
