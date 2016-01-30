@@ -26,6 +26,16 @@
     - "{{ anyenv.plugins }}"
 
 
+- name: Update anyenv
+  shell: |
+    source "{{ anyenv.profile_to_add_path }}"
+    anyenv update
+  args:
+    executable: "{{ anyenv.executable }}"
+  register: result
+  changed_when: false
+
+
 - name: Add path to profile
   blockinfile:
     dest: "{{ anyenv.profile_to_add_path }}"
@@ -37,24 +47,48 @@
 # When added -s option, anyenv will skip the installation.
 - name: Install envs
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
-    /bin/bash -lc "anyenv install -s {{ item.name }}"
+    source "{{ anyenv.profile_to_add_path }}"
+    anyenv install -s "{{ item.name }}"
+  args:
+    executable: "{{ anyenv.executable }}"
   register: result
-  changed_when: result.stdout != "" and result.stderr != ""
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
   with_items: "{{ anyenv.envs }}"
 
 
 # Usually **env has -s option in installation command,
 # but luaenv not having it. So I used failed_when.
-- name: Install language
+- name: Install versions
   shell: |
-    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
-    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
+    source "{{ anyenv.profile_to_add_path }}"
+    "{{ item.0.name }}" install "{{ item.1 }}"
+  args:
+    executable: "{{ anyenv.executable }}"
   register: result
   changed_when: "'already exists' not in result.stderr"
-  failed_when: "result.stderr != '' and ('already exists' not in result.stderr and 'Installed' not in result.stderr)"
+  failed_when:
+    - "result.stderr != ''"
+    - "'already exists' not in result.stderr"
+    - "'Installed' not in result.stderr)"
   with_subelements:
     - "{{ anyenv.envs }}"
     - "installation_versions"
+
+
+- name: Set global version
+  shell: |
+    source "{{ anyenv.profile_to_add_path }}"
+    "{{ item.name }}" version
+    "{{ item.name }}" global "{{ item.global_version | default(system) }}"
+    "{{ item.name }}" version
+  args:
+    executable: "{{ anyenv.executable }}"
+  register: result
+  changed_when:
+    - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+  with_items:
+    - "{{ anyenv.envs }}"
 
 

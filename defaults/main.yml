@@ -2,6 +2,7 @@
 anyenv:
   repository_url : https://github.com/riywo/anyenv
   installaton_dir: ~/.anyenv
+  executable: /bin/bash
 
   export: true
   profile_to_add_path: ~/.bashrc
@@ -20,7 +21,7 @@ anyenv:
 
   envs:
     - name: rbenv
-      global: 2.3.0
+      global_version: 2.3.0
       dependencies: []
       installation_versions:
         - 2.3.0
@@ -28,16 +29,22 @@ anyenv:
         - 2.2.3
 
     - name: pyenv
-      global: 2.7.10
+      global_version: 2.7.10
       dependencies: []
       installation_versions:
         - 2.7.10
         - 3.5.1
 
     - name: luaenv
-      global: 5.2.1
+      global_version: 5.2.2
       dependencies: []
       installation_versions:
         - 5.2.1
         - 5.2.2
+
+    - name: plenv
+      global_version: system
+      dependencies: []
+      installation_versions: []
+
 

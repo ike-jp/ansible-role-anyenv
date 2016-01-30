@@ -9,8 +9,8 @@ Under development
 Requirements
 ------------
 
-+ RedHat/CentOS: bash
-+ Debian/Ubuntu: bash
++ RedHat/CentOS: bash, git
++ Debian/Ubuntu: bash, git
 
 
 Role Variables
@@ -18,7 +18,7 @@ Role Variables
 
 Available variables are listed below, along with default values (see defaults/main.yml):
 
-```
+```yaml
 anyenv:
   repository_url : https://github.com/riywo/anyenv
   install_dir: ~/.anyenv
@@ -34,11 +34,13 @@ anyenv:
   envs:
     - name: rbenv
       global: 2.3.0
+      dependencies: []
       installation_versions:
         - 2.3.0
         - 2.2.4
 ...
 ```
+
 
 Dependencies
 ------------
@@ -49,9 +51,11 @@ Dependencies
 Example Playbook
 ----------------
 
+```yaml
     - hosts: servers
       roles:
          - { role: ike-jp.anyenv }
+```
 
 
 License
@@ -63,11 +67,15 @@ MIT License
 Acknowledgments
 ---------------
 
-I want to thank [Jeff Geerling](http://www.jeffgeerling.com/) and [YAEGASHI Takeshi](https://github.com/yaegashi)
++ [Jeff Geerling](http://www.jeffgeerling.com/)
++ [YAEGASHI Takeshi](https://github.com/yaegashi)
 
 
 Author Information
 ------------------
 
 This role was created in 2016 by ike-jp.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ike-jp/ansible-role-anyenv/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 
