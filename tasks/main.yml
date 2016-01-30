@@ -43,8 +43,8 @@
     /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
     /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
   register: result
-  changed_when: result.stdout != "" and result.stderr != ""
-  failed_when: result.stderr != "" and 'already exists' not in result.stderr
+  changed_when: "'already exists' not in result.stderr"
+  failed_when: "result.stderr != '' and ('already exists' not in result.stderr and 'Installed' not in result.stderr)"
   with_subelements:
     - "{{ anyenv.envs }}"
     - "installation_versions"
