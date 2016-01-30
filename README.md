@@ -22,7 +22,7 @@ Available variables are listed below, along with default values (see defaults/ma
 anyenv_repository_url: https://github.com/riywo/anyenv
 anyenv_installaton_dir: ~/.anyenv
 
-anyenv_is_export: true
+anyenv_export: true
 anyenv_export_profile_to_add_path: ~/.bashrc
 anyenv_export_text: |
   if [ -d $HOME/.anyenv ] ; then

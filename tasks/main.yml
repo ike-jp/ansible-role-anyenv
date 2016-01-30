@@ -31,7 +31,7 @@
     dest: "{{ anyenv_export_profile_to_add_path }}"
     block: "{{ anyenv_export_text }}"
     insertafter: EOF
-  when: anyenv_is_export
+  when: anyenv_export
 
 
 - name: Update anyenv
