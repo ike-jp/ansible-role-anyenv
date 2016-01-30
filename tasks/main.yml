@@ -15,7 +15,15 @@
 - name: Install anyenv
   git:
     repo: "{{ anyenv.repository_url }}"
-    dest: "{{ anyenv.install_dir }}"
+    dest: "{{ anyenv.installaton_dir }}"
+
+
+- name: Install anyenv-plugins
+  git:
+    repo: "{{ item.repository_url }}"
+    dest: "{{ item.installation_dir }}"
+  with_items:
+    - "{{ anyenv.plugins }}"
 
 
 - name: Add path to profile

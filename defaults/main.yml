@@ -1,7 +1,7 @@
 ---
 anyenv:
   repository_url : https://github.com/riywo/anyenv
-  install_dir: ~/.anyenv
+  installaton_dir: ~/.anyenv
 
   export: true
   profile_to_add_path: ~/.bashrc
@@ -10,6 +10,13 @@ anyenv:
         export PATH="$HOME/.anyenv/bin:$PATH"
         eval "$(anyenv init -)"
     fi
+
+  plugins:
+    # Because the version of Ruby-build is old,
+    # may fail to install the new Ruby.
+    - name: anyenv-update
+      repository_url: https://github.com/znz/anyenv-update.git
+      installation_dir: ~/.anyenv/plugins/anyenv-update
 
   envs:
     - name: rbenv
