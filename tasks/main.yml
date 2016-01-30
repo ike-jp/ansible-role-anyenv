@@ -28,10 +28,8 @@
 
 - name: Update anyenv
   shell: |
-    source "{{ anyenv.profile_to_add_path }}"
-    anyenv update
-  args:
-    executable: "{{ anyenv.executable }}"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "anyenv update"
   register: result
   changed_when: false
 
@@ -47,10 +45,8 @@
 # When added -s option, anyenv will skip the installation.
 - name: Install envs
   shell: |
-    source "{{ anyenv.profile_to_add_path }}"
-    anyenv install -s "{{ item.name }}"
-  args:
-    executable: "{{ anyenv.executable }}"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "anyenv install -s {{ item.name }}"
   register: result
   changed_when:
     - result.stdout != ""
@@ -62,10 +58,8 @@
 # but luaenv not having it. So I used failed_when.
 - name: Install versions
   shell: |
-    source "{{ anyenv.profile_to_add_path }}"
-    "{{ item.0.name }}" install "{{ item.1 }}"
-  args:
-    executable: "{{ anyenv.executable }}"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
   register: result
   changed_when: "'already exists' not in result.stderr"
   failed_when:
@@ -79,12 +73,10 @@
 
 - name: Set global version
   shell: |
-    source "{{ anyenv.profile_to_add_path }}"
-    "{{ item.name }}" version
-    "{{ item.name }}" global "{{ item.global_version | default(system) }}"
-    "{{ item.name }}" version
-  args:
-    executable: "{{ anyenv.executable }}"
+    /bin/bash -lc "source {{ anyenv.profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} version"
+    /bin/bash -lc "{{ item.name }} global {{ item.global_version | default(system) }}"
+    /bin/bash -lc "{{ item.name }} version"
   register: result
   changed_when:
     - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
