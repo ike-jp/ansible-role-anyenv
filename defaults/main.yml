@@ -14,22 +14,23 @@ anyenv:
   envs:
     - name: rbenv
       global: 2.3.0
+      dependencies: []
       installation_versions:
         - 2.3.0
         - 2.2.4
         - 2.2.3
-      dependencies:
 
     - name: pyenv
       global: 2.7.10
+      dependencies: []
       installation_versions:
         - 2.7.10
         - 3.5.1
-      dependencies:
 
     - name: luaenv
       global: 5.2.1
+      dependencies: []
       installation_versions:
         - 5.2.1
-      dependencies:
+        - 5.2.2
 
