@@ -60,13 +60,19 @@ script:
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv"
 
   # [debug] Show after home directory
-  - ls -lah ~
-  - cat ~/.profile
-  - cat ~/.bashrc
+  #- ls -lah ~
+  #- cat ~/.profile
+  #- cat ~/.bashrc
 
   # [debug] Show anyenv version
   - source ~/.bashrc
   - anyenv version
+
+  # [debug] Show interep version
+  - ruby --version
+  - lua -v
+  - python -V
+  - perl -v
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >

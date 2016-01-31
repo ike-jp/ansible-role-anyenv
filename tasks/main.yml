@@ -66,8 +66,10 @@
     - "'already installed' not in result.stderr"
   failed_when:
     - result.stderr != ""
+    # added for pyenv, luaenv
     - "'already exists' not in result.stderr"
     - "'already installed' not in result.stderr"
+    # added for rbenv
     - "'Installed' not in result.stderr"
   with_subelements:
     - "{{ anyenv_envs }}"
