@@ -61,11 +61,13 @@
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
   register: result
-  changed_when: "'already exists' not in result.stderr"
-  failed_when:
-    - "result.stderr != ''"
+  changed_when:
     - "'already exists' not in result.stderr"
-    - "'Installed' not in result.stderr"
+    - "'already installed' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'already exists' not in result.stderr"
+    - "'already installed' not in result.stderr"
   with_subelements:
     - "{{ anyenv_envs }}"
     - "installation_versions"
@@ -91,6 +93,10 @@
   register: result
   changed_when:
     - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+    - "'no versions' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'no versions' not in result.stderr"
   with_items:
     - "{{ anyenv_envs }}"
 
