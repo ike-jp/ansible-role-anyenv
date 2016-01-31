@@ -69,9 +69,13 @@ script:
   - anyenv version
 
   # [debug] Show interep version
+  - rbenv versions
   - ruby --version
+  - luaenv versions
   - lua -v
+  - pyenv versions
   - python -V
+  - plenv versions
   - perl -v
 
   # Run the role/playbook again, checking to make sure it's idempotent.

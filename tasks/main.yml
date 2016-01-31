@@ -16,6 +16,7 @@
   git:
     repo: "{{ anyenv_repository_url }}"
     dest: "{{ anyenv_installaton_dir }}"
+  tags: anyenv
 
 
 - name: Install anyenv-plugins
@@ -24,6 +25,7 @@
     dest: "{{ anyenv_plugins_installation_dir }}/{{ item.name }}"
   with_items:
     - "{{ anyenv_plugins }}"
+  tags: anyenv
 
 
 - name: Add path to profile
@@ -32,14 +34,17 @@
     block: "{{ anyenv_export_block }}"
     insertafter: EOF
   when: anyenv_export
+  tags: anyenv
 
 
 - name: Update anyenv
+  tags: anyenv
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "anyenv update"
   register: result
   changed_when: false
+  tags: anyenv
 
 
 # When added -s option, anyenv will skip the installation.
@@ -52,6 +57,7 @@
     - result.stdout != ""
     - result.stderr != ""
   with_items: "{{ anyenv_envs }}"
+  tags: anyenv
 
 
 # Usually **env has -s option in installation command,
@@ -74,17 +80,7 @@
   with_subelements:
     - "{{ anyenv_envs }}"
     - "installation_versions"
-
-
-- name: Rehash envs
-  shell: |
-    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.name }} rehash"
-  register: result
-  changed_when:
-    - result.stdout != ""
-    - result.stderr != ""
-  with_items: "{{ anyenv_envs }}"
+  tags: anyenv
 
 
 - name: Set global version
@@ -102,5 +98,18 @@
     - "'no versions' not in result.stderr"
   with_items:
     - "{{ anyenv_envs }}"
+  tags: anyenv
+
+
+- name: Rehash envs
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items: "{{ anyenv_envs }}"
+  tags: anyenv
 
 
