@@ -68,6 +68,7 @@
     - result.stderr != ""
     - "'already exists' not in result.stderr"
     - "'already installed' not in result.stderr"
+    - "'Installed' not in result.stderr"
   with_subelements:
     - "{{ anyenv_envs }}"
     - "installation_versions"
