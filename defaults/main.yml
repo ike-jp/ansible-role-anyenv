@@ -38,9 +38,10 @@ anyenv_envs:
       - 5.2.2
 
   - name: plenv
-    global_version: 5.23.7
-    installation_versions:
-      - 5.23.7
+    global_version: system
+#    global_version: 5.23.7
+    installation_versions: []
+#      - 5.23.7
 
   - name: goenv
     global_version: system
