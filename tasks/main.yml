@@ -29,7 +29,7 @@
 - name: Add path to profile
   blockinfile:
     dest: "{{ anyenv_export_profile_to_add_path }}"
-    block: "{{ anyenv_export_text }}"
+    block: "{{ anyenv_export_block }}"
     insertafter: EOF
   when: anyenv_export
 
