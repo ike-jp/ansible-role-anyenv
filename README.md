@@ -24,7 +24,7 @@ anyenv_installaton_dir: ~/.anyenv
 
 anyenv_export: true
 anyenv_export_profile_to_add_path: ~/.bashrc
-anyenv_export_text: |
+anyenv_export_block: |
   if [ -d $HOME/.anyenv ] ; then
       export PATH="$HOME/.anyenv/bin:$PATH"
       eval "$(anyenv init -)"
