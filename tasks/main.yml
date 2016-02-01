@@ -56,7 +56,9 @@
     - "{{ anyenv_envs }}"
 
 
-# Install pyenv versions
+# Can't include by with_items on Ansible 1.9.x.
 - include: "pyenv.yml"
+- include: "luaenv.yml"
+- include: "rbenv.yml"
 
 
