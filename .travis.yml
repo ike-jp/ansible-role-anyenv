@@ -41,7 +41,6 @@ before_script:
   # --------------------
   - rvm implode --force > /dev/null 2>&1
 
-script:
   # [debug] Show home directory
   - ls -lah ~
   #- cat ~/.profile
@@ -54,8 +53,8 @@ script:
   - rbenv versions
   - ruby --version
   - which ruby
-  - lua -v
-  - which lua
+  #- lua -v > failed
+  #- which lua > failed
   - pyenv versions
   - python -V
   - which python
@@ -63,7 +62,7 @@ script:
   - which perl
 
   # [debug] Show current directory
-  - pwd
+  #- pwd
   #- ls -lah
   #- cat ansible.cfg
 
@@ -75,6 +74,7 @@ script:
   #- cat /etc/shells
   #- ls -la /bin/bash
 
+script:
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 

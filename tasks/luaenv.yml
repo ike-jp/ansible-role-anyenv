@@ -1,0 +1,55 @@
+---
+# Env name of this file
+- name: Set interp env name
+  set_fact:
+    env_name: luaenv
+
+
+- name: Set env params of this file
+  set_fact:
+    env_params: "{{ item }}"
+  when: '"{{ item.name }}" == "{{ env_name }}"'
+  with_items:
+    - "{{ anyenv_envs }}"
+
+
+- name: Install versions
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} install -s {{ item }}"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items:
+    - "{{ env_params.installation_versions }}"
+  tags: anyenv
+
+
+- name: Rehash env
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  tags: anyenv
+
+
+- name: Set global version
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} version"
+    /bin/bash -lc "{{ env_name }} global {{ env_params.global_version | default(system) }}"
+    /bin/bash -lc "{{ env_name }} version"
+  register: result
+  changed_when:
+    - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+    - "'no versions' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'no versions' not in result.stderr"
+  tags: anyenv
+
+

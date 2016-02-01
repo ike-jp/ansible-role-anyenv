@@ -10,15 +10,16 @@
           - 2.7.10
           - 3.5.1
 
+      - name: luaenv
+        global_version: 5.2.2
+        installation_versions:
+          - 5.2.2
+
 #      - name: rbenv
 #        global_version: 2.3.0
 #        installation_versions:
 #          - 2.3.0
 #
-#      - name: luaenv
-#        global_version: 5.2.2
-#        installation_versions:
-#          - 5.2.2
 #
 #      - name: plenv
 #        global_version: 5.23.7
