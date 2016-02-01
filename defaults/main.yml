@@ -42,7 +42,8 @@ anyenv_envs:
 #    installation_versions: []
     global_version: 5.23.7
     installation_versions:
-      - 5.23.7
+      #- 5.23.7
+      - 5.23.6
 
   - name: goenv
     global_version: system

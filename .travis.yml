@@ -32,6 +32,16 @@ script:
   # --------------------
   - rvm implode --force > /dev/null 2>&1
 
+  # [debug] Show before interep version
+  - rbenv versions
+  - ruby --version
+  - luaenv versions
+  - lua -v
+  - pyenv versions
+  - python -V
+  - plenv versions
+  - perl -v
+
   # [debug] Show ansible
   #- ansible --version
 

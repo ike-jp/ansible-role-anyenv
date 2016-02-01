@@ -83,6 +83,18 @@
   tags: anyenv
 
 
+- name: Rehash envs
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items: "{{ anyenv_envs }}"
+  tags: anyenv
+
+
 - name: Set global version
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
@@ -98,18 +110,6 @@
     - "'no versions' not in result.stderr"
   with_items:
     - "{{ anyenv_envs }}"
-  tags: anyenv
-
-
-- name: Rehash envs
-  shell: |
-    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.name }} rehash"
-  register: result
-  changed_when:
-    - result.stdout != ""
-    - result.stderr != ""
-  with_items: "{{ anyenv_envs }}"
   tags: anyenv
 
 
