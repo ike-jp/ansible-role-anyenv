@@ -16,7 +16,6 @@
   git:
     repo: "{{ anyenv_repository_url }}"
     dest: "{{ anyenv_installaton_dir }}"
-  tags: anyenv
 
 
 - name: Install anyenv-plugins
@@ -25,7 +24,6 @@
     dest: "{{ anyenv_plugins_installation_dir }}/{{ item.name }}"
   with_items:
     - "{{ anyenv_plugins }}"
-  tags: anyenv
 
 
 - name: Add path to profile
@@ -34,7 +32,6 @@
     block: "{{ anyenv_export_block }}"
     insertafter: EOF
   when: anyenv_export
-  tags: anyenv
 
 
 - name: Update anyenv
@@ -44,7 +41,6 @@
     /bin/bash -lc "anyenv update"
   register: result
   changed_when: false
-  tags: anyenv
 
 
 # When added -s option, **env will skip the installation.
@@ -53,12 +49,9 @@
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "anyenv install -s {{ item.name }}"
   register: result
-  changed_when:
-    - result.stdout != ""
-    - result.stderr != ""
+  changed_when: result.stdout != "" and result.stderr != ""
   with_items:
     - "{{ anyenv_envs }}"
-  tags: anyenv
 
 
 # Install **env versions
