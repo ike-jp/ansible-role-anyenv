@@ -1,7 +1,16 @@
---
-- name: Set env_name
+---
+# Env name of this file
+- name: Set interp env name
   set_fact:
     env_name: pyenv
+
+
+- name: Set env params of this file
+  set_fact:
+    env_params: "{{ item }}"
+  when: '"{{ item.name }}" == "{{ env_name }}"'
+  with_items:
+    - "{{ anyenv_envs }}"
 
 
 - name: Install versions
@@ -13,12 +22,11 @@
     - result.stdout != ""
     - result.stderr != ""
   with_items:
-    # pyenvを変数にしたい
-    - "{{ anyenv_envs.pyenv.installation_versions }}"
+    - "{{ env_params.installation_versions }}"
   tags: anyenv
 
 
-- name: Rehash "{{ env_name }}"
+- name: Rehash env
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "{{ env_name }} rehash"
@@ -33,7 +41,7 @@
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "{{ env_name }} version"
-    /bin/bash -lc "{{ env_name }} global {{ item.global_version | default(system) }}"
+    /bin/bash -lc "{{ env_name }} global {{ env_params.global_version | default(system) }}"
     /bin/bash -lc "{{ env_name }} version"
   register: result
   changed_when:

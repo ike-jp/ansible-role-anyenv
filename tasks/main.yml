@@ -49,14 +49,14 @@
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
     /bin/bash -lc "anyenv install -s {{ item.name }}"
   register: result
-  changed_when: result.stdout != "" and result.stderr != ""
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
   with_items:
     - "{{ anyenv_envs }}"
 
 
-# Install **env versions
-- include: "{{ item.name }}.yml"
-  with_items:
-    - "{{ anyenv_envs }}"
+# Install pyenv versions
+- include: "pyenv.yml"
 
 
