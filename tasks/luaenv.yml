@@ -13,16 +13,25 @@
     - "{{ anyenv_envs }}"
 
 
+# Usually **env has -s option in installation command,
+# but luaenv not having it. So I used failed_when.
 - name: Install versions
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ env_name }} install -s {{ item }}"
+    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
   register: result
   changed_when:
-    - result.stdout != ""
+    - "'already exists' not in result.stderr"
+    - "'already installed' not in result.stderr"
+  failed_when:
     - result.stderr != ""
+    - "'already exists' not in result.stderr"
+    - "'already installed' not in result.stderr"
+    # added for rbenv
+    #- "'Installed' not in result.stderr"
   with_items:
-    - "{{ env_params.installation_versions }}"
+    - "{{ anyenv_envs }}"
+    - "installation_versions"
   tags: anyenv
 
 
