@@ -48,12 +48,14 @@ before_script:
   # [debug] Show before interep version
   - rbenv versions
   - ruby --version
-  - luaenv versions
+  - which ruby
   - lua -v
+  - which lua
   - pyenv versions
   - python -V
-  - plenv versions
+  - which python
   - perl -v
+  - which perl
 
   # [debug] Show ansible
   #- ansible --version
