@@ -1,0 +1,71 @@
+--
+- name: Set env_name
+  set_fact:
+    env_name: rbenv
+
+
+# When added -s option, **env will skip the installation.
+- name: Install "{{ env_name }}"
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "anyenv install -s {{ env_name }}"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  tags: anyenv
+
+
+# Usually **env has -s option in installation command,
+# but luaenv not having it. So I used failed_when.
+- name: Install versions
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
+  register: result
+  changed_when:
+    - "'already exists' not in result.stderr"
+    - "'already installed' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    # added for pyenv, luaenv
+    - "'already exists' not in result.stderr"
+    - "'already installed' not in result.stderr"
+    # added for rbenv
+    - "'Installed' not in result.stderr"
+  with_items:
+    - "{{ anyenv_envs }}"
+    - "installation_versions"
+  tags: anyenv
+
+
+- name: Rehash envs
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items: "{{ anyenv_envs }}"
+  tags: anyenv
+
+
+- name: Set global version
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} version"
+    /bin/bash -lc "{{ item.name }} global {{ item.global_version | default(system) }}"
+    /bin/bash -lc "{{ item.name }} version"
+  register: result
+  changed_when:
+    - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+    - "'no versions' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'no versions' not in result.stderr"
+  with_items:
+    - "{{ anyenv_envs }}"
+  tags: anyenv
+
+

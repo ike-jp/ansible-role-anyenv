@@ -21,27 +21,27 @@ anyenv_plugins:
     repository_url: https://github.com/znz/anyenv-git.git
 
 anyenv_envs:
-  - name: rbenv
+  rbenv:
     global_version: 2.3.0
     installation_versions:
       - 2.3.0
 
-  - name: pyenv
+  pyenv:
     global_version: 2.7.10
     installation_versions:
       - 2.7.10
       - 3.5.1
 
-  - name: luaenv
+  luaenv:
     global_version: 5.2.2
     installation_versions:
       - 5.2.2
 
-  - name: plenv
+  plenv:
     global_version: system
     installation_versions: []
 
-  - name: goenv
+  goenv:
     global_version: system
     installation_versions: []
 

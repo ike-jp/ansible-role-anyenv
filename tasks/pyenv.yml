@@ -1,0 +1,47 @@
+--
+- name: Set env_name
+  set_fact:
+    env_name: pyenv
+
+
+- name: Install versions
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} install -s {{ item }}"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items:
+    # pyenvを変数にしたい
+    - "{{ anyenv_envs.pyenv.installation_versions }}"
+  tags: anyenv
+
+
+- name: Rehash "{{ env_name }}"
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  tags: anyenv
+
+
+- name: Set global version
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ env_name }} version"
+    /bin/bash -lc "{{ env_name }} global {{ item.global_version | default(system) }}"
+    /bin/bash -lc "{{ env_name }} version"
+  register: result
+  changed_when:
+    - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+    - "'no versions' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'no versions' not in result.stderr"
+  tags: anyenv
+
+

@@ -4,26 +4,26 @@
 
   vars:
     anyenv_envs:
-      - name: rbenv
-        global_version: 2.3.0
-        installation_versions:
-          - 2.3.0
-
       - name: pyenv
         global_version: 2.7.10
         installation_versions:
           - 2.7.10
           - 3.5.1
 
-      - name: luaenv
-        global_version: 5.2.2
-        installation_versions:
-          - 5.2.2
-
-      - name: plenv
-        global_version: 5.23.7
-        installation_versions:
-          - 5.23.7
+#      - name: rbenv
+#        global_version: 2.3.0
+#        installation_versions:
+#          - 2.3.0
+#
+#      - name: luaenv
+#        global_version: 5.2.2
+#        installation_versions:
+#          - 5.2.2
+#
+#      - name: plenv
+#        global_version: 5.23.7
+#        installation_versions:
+#          - 5.23.7
 
   roles:
     - yaegashi.blockinfile
