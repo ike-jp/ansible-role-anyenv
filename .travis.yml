@@ -40,6 +40,7 @@ before_script:
   # --------------------
   - rvm implode --force > /dev/null 2>&1
 
+script:
   # [debug] Show home directory
   - ls -lah ~
   #- cat ~/.profile
@@ -49,10 +50,12 @@ before_script:
   - rbenv versions
   - ruby --version
   - which ruby
+  - lua -v
   - which lua
   - pyenv versions
   - python -V
   - which python
+  - perl -v
   - which perl
 
   # [debug] Show ansible
@@ -71,7 +74,6 @@ before_script:
   #- cat /etc/shells
   #- ls -la /bin/bash
 
-script:
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 
