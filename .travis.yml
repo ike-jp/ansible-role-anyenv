@@ -19,7 +19,8 @@ before_install:
 
 install:
   # Install Ansible.
-  - pip install ansible==1.9.4
+  #- pip install ansible==1.9.4
+  - pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
@@ -46,6 +47,9 @@ script:
   #- cat ~/.profile
   #- cat ~/.bashrc
 
+  # [debug] Show ansible
+  - ansible --version
+
   # [debug] Show before interep version
   - rbenv versions
   - ruby --version
@@ -57,9 +61,6 @@ script:
   - which python
   - perl -v
   - which perl
-
-  # [debug] Show ansible
-  #- ansible --version
 
   # [debug] Show current directory
   - pwd
