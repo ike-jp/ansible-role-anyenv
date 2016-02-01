@@ -5,9 +5,9 @@
   vars:
     anyenv_envs:
       - name: pyenv
-        global_version: 2.7.10
+        global_version: 2.7.9
         installation_versions:
-          - 2.7.10
+          - 2.7.9
           - 3.5.1
 
       - name: luaenv
@@ -15,12 +15,11 @@
         installation_versions:
           - 5.2.2
 
-#      - name: rbenv
-#        global_version: 2.3.0
-#        installation_versions:
-#          - 2.3.0
-#
-#
+      - name: rbenv
+        global_version: 2.3.0
+        installation_versions:
+          - 2.3.0
+
 #      - name: plenv
 #        global_version: 5.23.7
 #        installation_versions:

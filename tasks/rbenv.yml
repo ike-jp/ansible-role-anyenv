@@ -1,19 +1,16 @@
 --
-- name: Set env_name
+# Env name of this file
+- name: Set interp env name
   set_fact:
     env_name: rbenv
 
 
-# When added -s option, **env will skip the installation.
-- name: Install "{{ env_name }}"
-  shell: |
-    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "anyenv install -s {{ env_name }}"
-  register: result
-  changed_when:
-    - result.stdout != ""
-    - result.stderr != ""
-  tags: anyenv
+- name: Set env params of this file
+  set_fact:
+    env_params: "{{ item }}"
+  when: '"{{ item.name }}" == "{{ env_name }}"'
+  with_items:
+    - "{{ anyenv_envs }}"
 
 
 # Usually **env has -s option in installation command,
@@ -28,35 +25,33 @@
     - "'already installed' not in result.stderr"
   failed_when:
     - result.stderr != ""
-    # added for pyenv, luaenv
-    - "'already exists' not in result.stderr"
-    - "'already installed' not in result.stderr"
-    # added for rbenv
     - "'Installed' not in result.stderr"
+    # added for pyenv, luaenv
+    #- "'already exists' not in result.stderr"
+    #- "'already installed' not in result.stderr"
   with_items:
     - "{{ anyenv_envs }}"
     - "installation_versions"
   tags: anyenv
 
 
-- name: Rehash envs
+- name: Rehash env
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.name }} rehash"
+    /bin/bash -lc "{{ env_name }} rehash"
   register: result
   changed_when:
     - result.stdout != ""
     - result.stderr != ""
-  with_items: "{{ anyenv_envs }}"
   tags: anyenv
 
 
 - name: Set global version
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.name }} version"
-    /bin/bash -lc "{{ item.name }} global {{ item.global_version | default(system) }}"
-    /bin/bash -lc "{{ item.name }} version"
+    /bin/bash -lc "{{ env_name }} version"
+    /bin/bash -lc "{{ env_name }} global {{ env_params.global_version | default(system) }}"
+    /bin/bash -lc "{{ env_name }} version"
   register: result
   changed_when:
     - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
@@ -64,8 +59,6 @@
   failed_when:
     - result.stderr != ""
     - "'no versions' not in result.stderr"
-  with_items:
-    - "{{ anyenv_envs }}"
   tags: anyenv
 
 
