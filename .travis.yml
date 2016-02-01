@@ -8,6 +8,7 @@ python: "2.7"
 
 env:
   - SITE=test.yml
+
 #  matrix:
 #    - SITE=test.yml
 #    - SITE=test2.yml
@@ -26,9 +27,9 @@ install:
   # Install dependencies.
   - ansible-galaxy install yaegashi.blockinfile
 
-  cache:
-    directories:
-      - ../yaegashi.blockinfile
+#  cache:
+#    directories:
+#      - ../yaegashi.blockinfile
 
 before_script:
   # Uninstall rvm because failed to install Ruby
