@@ -7,7 +7,9 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=test.yml
+  matrix:
+    - SITE=test.yml
+    #- SITE=test2.yml
 
 before_install:
   - sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu/ trusty main universe"
@@ -23,7 +25,11 @@ install:
   # Install dependencies.
   - ansible-galaxy install yaegashi.blockinfile
 
-script:
+  cache:
+    directories:
+      - ../yaegashi.blockinfile
+
+before_script:
   # Uninstall rvm because failed to install Ruby
   # by issuing the following error when run playbook test.
   # --------------------
@@ -31,6 +37,11 @@ script:
   # - /usr/local/rvm/gems/ruby-2.2.3/ (Errno::EPERM)
   # --------------------
   - rvm implode --force > /dev/null 2>&1
+
+  # [debug] Show home directory
+  - ls -lah ~
+  #- cat ~/.profile
+  #- cat ~/.bashrc
 
   # [debug] Show before interep version
   - rbenv versions
@@ -46,7 +57,7 @@ script:
   #- ansible --version
 
   # [debug] Show current directory
-  #- pwd
+  - pwd
   #- ls -lah
   #- cat ansible.cfg
 
@@ -58,17 +69,25 @@ script:
   #- cat /etc/shells
   #- ls -la /bin/bash
 
-  # [debug] Show home directory
-  #- ls -lah ~
-  #- cat ~/.profile
-  #- cat ~/.bashrc
-
+script:
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 
   # Run the role/playbook with ansible-playbook.
   - "ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv"
 
+  # Run the role/playbook again, checking to make sure it's idempotent.
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+after_success:
+
+after_failure:
+
+after_script:
   # [debug] Show after home directory
   #- ls -lah ~
   #- cat ~/.profile
@@ -87,12 +106,5 @@ script:
   - python -V
   - plenv versions
   - perl -v
-
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local -vvvv
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
 
 

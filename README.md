@@ -83,10 +83,6 @@ Example Playbook
               - 3.5.1
 
         anyenv_dependencies:
-          - name: common
-            libraries:
-              - zlib1g-dev
-
           - name: rbenv
             libraries:
               - sqlite3
