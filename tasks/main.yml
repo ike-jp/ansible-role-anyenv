@@ -57,6 +57,10 @@
 
 
 # Can't include by with_items on Ansible 1.9.x.
+#- name: Install each envs
+#  include: "{{ item.name }}.yml"
+#  with_items:
+#    - "{{ anyenv_envs }}"
 - include: "pyenv.yml"
 - include: "luaenv.yml"
 - include: "rbenv.yml"
