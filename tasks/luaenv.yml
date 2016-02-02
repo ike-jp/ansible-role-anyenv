@@ -30,8 +30,7 @@
     # added for rbenv
     #- "'Installed' not in result.stderr"
   with_items:
-    - "{{ anyenv_envs }}"
-    - "installation_versions"
+    - "{{ env_params.installation_versions }}"
   tags: anyenv
 
 
