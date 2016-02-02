@@ -59,7 +59,7 @@
 - name: Install versions
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
+    /bin/bash -lc "{{ item.0.name }} install -s {{ item.1 }}"
   register: result
   changed_when:
     - result.stdout != ""
@@ -93,6 +93,7 @@
   failed_when:
     - result.stderr != ""
     - "'no versions' not in result.stderr"
+  when: "{{ item.installation_versions | length }} != 0"
   with_items:
     - "{{ anyenv_envs }}"
 

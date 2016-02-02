@@ -4,24 +4,35 @@
 
   vars:
     anyenv_envs:
-      - name: rbenv
-        global_version: 2.2.3
-        installation_versions:
-          - 2.2.3
-
-      - name: pyenv
-        global_version: 2.4.6
-        installation_versions:
-          - 2.4.6
-          - 2.1.3
-
+      - name: crenv
+        installation_versions: []
+      - name: denv
+        installation_versions: []
+      - name: erlenv
+        installation_versions: []
+      - name: exenv
+        installation_versions: []
+      - name: goenv
+        installation_versions: []
+      - name: hsenv
+        installation_versions: []
+      - name: jenv
+        installation_versions: []
       - name: luaenv
-        global_version: luajit-2.0.4
-        installation_versions:
-          - luajit-2.0.4
-
+        installation_versions: []
+          #- 5.2.2
+      - name: nenv
+        installation_versions: []
+      - name: phpenv
+        installation_versions: []
       - name: plenv
-        global_version: system
+        installation_versions: []
+          #- 5.23.7
+      - name: Renv
+        installation_versions: []
+      - name: sbtenv
+        installation_versions: []
+      - name: scalaenv
         installation_versions: []
 
   roles:
