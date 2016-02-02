@@ -24,11 +24,12 @@
     - "'already exists' not in result.stderr"
     - "'already installed' not in result.stderr"
   failed_when:
+    # When already installed
     - result.stderr != ""
     - "'already exists' not in result.stderr"
     - "'already installed' not in result.stderr"
-    # added for rbenv
-    #- "'Installed' not in result.stderr"
+    # When installed
+    - "'Installed' not in result.stderr"
   with_items:
     - "{{ env_params.installation_versions }}"
   tags: anyenv
