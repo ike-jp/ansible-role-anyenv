@@ -18,7 +18,7 @@
 - name: Install versions
   shell: |
     /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
-    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
+    /bin/bash -lc "{{ env_name }} install {{ item }}"
   register: result
   changed_when:
     - "'already exists' not in result.stderr"
