@@ -56,13 +56,44 @@
     - "{{ anyenv_envs }}"
 
 
-# Can't include by with_items on Ansible 1.9.x.
-#- name: Install each envs
-#  include: "{{ item.name }}.yml"
-#  with_items:
-#    - "{{ anyenv_envs }}"
-- include: "pyenv.yml"
-- include: "luaenv.yml"
-- include: "rbenv.yml"
+- name: Install versions
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.0.name }} install {{ item.1 }}"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_subelements:
+    - "{{ anyenv_envs }}"
+    - "installation_versions"
+
+
+- name: Rehash envs
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} rehash"
+  register: result
+  changed_when:
+    - result.stdout != ""
+    - result.stderr != ""
+  with_items: "{{ anyenv_envs }}"
+
+
+- name: Set global version
+  shell: |
+    /bin/bash -lc "source {{ anyenv_export_profile_to_add_path }}"
+    /bin/bash -lc "{{ item.name }} version"
+    /bin/bash -lc "{{ item.name }} global {{ item.global_version | default(system) }}"
+    /bin/bash -lc "{{ item.name }} version"
+  register: result
+  changed_when:
+    - '"{{ result.stdout_lines[0] | default(0) }}" != "{{ result.stdout_lines[1] | default(1) }}"'
+    - "'no versions' not in result.stderr"
+  failed_when:
+    - result.stderr != ""
+    - "'no versions' not in result.stderr"
+  with_items:
+    - "{{ anyenv_envs }}"
 
 
